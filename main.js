@@ -1,8 +1,13 @@
 
 const canvas = document.querySelector('canvas');
 const context = canvas.getContext('2d');
+const difficultyContainer = document.querySelector('.container__difficulty');
 
-const targetRadius = 30;
+const difficulty = {
+    targetRadius: 30,
+    minSpeed: 800,
+    maxSpeed: 1300
+};
 
 function drawCircle(x, y, radius, color) {
     context.fillStyle = color;
@@ -11,9 +16,9 @@ function drawCircle(x, y, radius, color) {
     context.fill();
 }
 function drawTarget(x, y){
-    drawCircle(x, y, targetRadius, "#ea5455");
-    drawCircle(x, y, ((targetRadius/3)*2), "#eaeaea");
-    drawCircle(x, y, (targetRadius/3), "#ea5455");
+    drawCircle(x, y, difficulty.targetRadius, "#ea5455");
+    drawCircle(x, y, ((difficulty.targetRadius/3)*2), "#eaeaea");
+    drawCircle(x, y, (difficulty.targetRadius/3), "#ea5455");
 }
 function returnRandomNumberInRange(min, max){
     return Math.random() * (max - min) + min;
@@ -22,12 +27,12 @@ function clearCanvas(){
     context.clearRect(0, 0, 700, 700);
 }
 
-const targetPosition = {}
+const targetPosition = {};
 
 function updateTargetPosition(){
     
-    targetPosition.x = returnRandomNumberInRange(targetRadius, 700-targetRadius);
-    targetPosition.y = returnRandomNumberInRange(targetRadius, 500-targetRadius);
+    targetPosition.x = returnRandomNumberInRange(difficulty.targetRadius, 700-difficulty.targetRadius);
+    targetPosition.y = returnRandomNumberInRange(difficulty.targetRadius, 500-difficulty.targetRadius);
 
     clearCanvas();
     drawTarget(targetPosition.x, targetPosition.y);
@@ -53,7 +58,7 @@ function mouseClick(event){
     mouseClickPosition.y = event.clientY - canvas.offsetTop;
     console.log(mouseClickPosition, targetPosition);
 
-    if(mouseClickPosition.x <= targetPosition.x+targetRadius && mouseClickPosition.x >= targetPosition.x-targetRadius && mouseClickPosition.y <= targetPosition.y+targetRadius && mouseClickPosition.y >= targetPosition.y-targetRadius){
+    if(mouseClickPosition.x <= targetPosition.x+difficulty.targetRadius && mouseClickPosition.x >= targetPosition.x-difficulty.targetRadius && mouseClickPosition.y <= targetPosition.y+difficulty.targetRadius && mouseClickPosition.y >= targetPosition.y-difficulty.targetRadius){
         updateScore(true);
     }
     else{
@@ -61,6 +66,10 @@ function mouseClick(event){
     }
 }
 
-setInterval(updateTargetPosition, returnRandomNumberInRange(800, 1300))
+setInterval(updateTargetPosition, returnRandomNumberInRange(difficulty.minSpeed, difficulty.maxSpeed));
 
 canvas.addEventListener("click", mouseClick);
+
+difficultyContainer.addEventListener("click",function(event){
+    console.log(event.target)
+})
