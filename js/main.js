@@ -1,44 +1,24 @@
+export {returnRandomNumberInRange, difficulty, refresh};
+import {updateTargetPosition, targetPosition} from './targetPosition.js';
+import {updateDifficultyVisual, returnNewDifficultyValues} from './updateDifficulty.js';
 
 const canvas = document.querySelector('canvas');
-const context = canvas.getContext('2d');
 const difficultyContainer = document.querySelector('.container__difficulty');
 
-const difficulty = {
+let difficulty = {
     targetRadius: 30,
     minSpeed: 800,
     maxSpeed: 1300
 };
-
-function drawCircle(x, y, radius, color) {
-    context.fillStyle = color;
-    context.beginPath();
-    context.arc(x, y, radius, 0, 2 * Math.PI);
-    context.fill();
-}
-function drawTarget(x, y){
-    drawCircle(x, y, difficulty.targetRadius, "#ea5455");
-    drawCircle(x, y, ((difficulty.targetRadius/3)*2), "#eaeaea");
-    drawCircle(x, y, (difficulty.targetRadius/3), "#ea5455");
-}
 function returnRandomNumberInRange(min, max){
     return Math.random() * (max - min) + min;
 }
-function clearCanvas(){
-    context.clearRect(0, 0, 700, 700);
-}
-
-const targetPosition = {};
-
-function updateTargetPosition(){
-    
-    targetPosition.x = returnRandomNumberInRange(difficulty.targetRadius, 700-difficulty.targetRadius);
-    targetPosition.y = returnRandomNumberInRange(difficulty.targetRadius, 500-difficulty.targetRadius);
-
-    clearCanvas();
-    drawTarget(targetPosition.x, targetPosition.y);
+function restartRefresh(){
+    clearInterval(refresh);
+    refresh = setInterval(updateTargetPosition, returnRandomNumberInRange(difficulty.minSpeed, difficulty.maxSpeed));
 }
 function updateScore(hit){
-    let score = document.querySelector(".container__scoreCounter");
+    const score = document.querySelector(".container__scoreCounter");
 
     if(hit){
         score.textContent = parseInt(score.textContent) + 1;
@@ -66,10 +46,16 @@ function mouseClick(event){
     }
 }
 
-setInterval(updateTargetPosition, returnRandomNumberInRange(difficulty.minSpeed, difficulty.maxSpeed));
+let refresh = setInterval(updateTargetPosition, returnRandomNumberInRange(difficulty.minSpeed, difficulty.maxSpeed));
 
 canvas.addEventListener("click", mouseClick);
+difficultyContainer.addEventListener("click",(difficultyContainerClick)=>{
+    
+    updateDifficultyVisual(difficultyContainerClick);
 
-difficultyContainer.addEventListener("click",function(event){
-    console.log(event.target)
-})
+    console.log(difficulty);
+    difficulty = Object.assign(difficulty, returnNewDifficultyValues(difficultyContainerClick));
+    console.log(difficulty);
+
+    restartRefresh();
+});
