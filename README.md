@@ -8,7 +8,8 @@ Simple hit the target game made with plain JavaScript.
 
 ### How it works
 
-Target has a random position that changes every 0.8 - 1.3s. 1 point for a hit, -1 point for a miss.
+Hitting the center of the target grants you 3 points, the white part 2 points and the outter part 1 point. The target moves randomly and it's speed and size changes according to the difficulty.
+obs: Hitting the center of the target awards the same amount of points in easy, medium and hard.
 
 ### Future implementations
 
