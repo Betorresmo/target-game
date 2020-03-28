@@ -5,9 +5,15 @@ export default mouseClick;
 function updateScore(points){
     const score = document.querySelector(".container__scoreCounter");
 
+    if(points === 'reset'){
+        score.textContent = 0;
+        score.classList.add("scoreUpdate");
+        setTimeout(()=>score.classList.remove("scoreUpdate"), 200);
+    } else{
         score.textContent = parseInt(score.textContent) + points;
         score.classList.add("scoreUpdate");
         setTimeout(()=>score.classList.remove("scoreUpdate"), 200);
+    }
 }
 function mouseClick(click){
     const mouseClickPosition = {};
@@ -26,6 +32,6 @@ function mouseClick(click){
     } else if(distanceBetween <= difficulty.targetRadius && distanceBetween > ((difficulty.targetRadius/3)*2)){
         updateScore(1);
     } else{
-        updateScore(-1);
+        updateScore('reset');
     }
 }

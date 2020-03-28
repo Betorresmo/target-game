@@ -1,6 +1,11 @@
 import {difficulty, returnRandomNumberInRange} from './main.js';
 export {updateTargetPosition, targetPosition};
 
+const targetColor = {
+    outerCenter: '#fe346e',
+    middle: '#fff'
+};
+
 const canvas = document.querySelector('canvas');
 const context = canvas.getContext('2d');
 
@@ -11,9 +16,9 @@ function drawCircle(x, y, radius, color) {
     context.fill();
 }
 function drawTarget(x, y){
-    drawCircle(x, y, difficulty.targetRadius, "#ea5455");
-    drawCircle(x, y, ((difficulty.targetRadius/3)*2), "#eaeaea");
-    drawCircle(x, y, (difficulty.targetRadius/3), "#ea5455");
+    drawCircle(x, y, difficulty.targetRadius, targetColor.outerCenter);
+    drawCircle(x, y, ((difficulty.targetRadius/3)*2), targetColor.middle);
+    drawCircle(x, y, (difficulty.targetRadius/3), targetColor.outerCenter);
 }
 function clearCanvas(){
     context.clearRect(0, 0, 700, 700);
