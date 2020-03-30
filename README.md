@@ -16,3 +16,5 @@ obs: Hitting the center of the target awards the same amount of points in easy, 
 - 3 levels of difficulty (target sizes and speed); ✅
 - Target instantly changes position when hit;
 - Different scoring for each part of the target. ✅
+
+## [Contact me](https://www.linkedin.com/in/guerrero-roberto/)
