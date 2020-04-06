@@ -17,4 +17,4 @@ obs: Hitting the center of the target awards the same amount of points in easy, 
 - Target instantly changes position when hit;
 - Different scoring for each part of the target. ✅
 
-## [Contact me](https://www.linkedin.com/in/guerrero-roberto/)
+## 📬 [Contact me](https://www.linkedin.com/in/guerrero-roberto/)
